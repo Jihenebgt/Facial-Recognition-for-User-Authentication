@@ -37,7 +37,7 @@ The system is composed of two main components:
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/your-username/facial-auth-system.git
+   git clone https://github.com/Jihenebgt/Facial-Recognition-for-User-Authentication.git
    ```
 
 2. **Install backend dependencies**:
