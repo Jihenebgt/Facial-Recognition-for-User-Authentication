@@ -1,132 +1,131 @@
-# Guide d'utilisation du Système d'Authentification Faciale
+##User Guide for the Facial Authentication System
 
-## Vue d'ensemble
+## Overview
 
-Ce système d'authentification faciale utilise OpenCV et Python pour la détection et la reconnaissance faciale, avec une interface web en HTML, CSS et JavaScript. Il permet de détecter et reconnaître des visages en temps réel via une webcam.
+This facial authentication system uses OpenCV and Python for face detection and recognition, with a web interface built in HTML, CSS, and JavaScript. It allows real-time face detection and recognition via a webcam.
 
-## Architecture du système
+## System Architecture
 
-Le système est composé de deux parties principales :
+The system is composed of two main parts:
 
-1. **Backend** : Serveur Python Flask avec OpenCV qui gère la détection et la reconnaissance faciale
-2. **Frontend** : Interface web qui permet l'interaction avec l'utilisateur et la capture vidéo
+1. **Backend** : Python Flask server with OpenCV handling face detection and recognition
+2. **Frontend** : Web interface allowing user interaction and video capture
 
-## Prérequis
+## Prerequisites
 
-- Python 3.x avec les dépendances listées dans `requirements.txt`
-- Navigateur web moderne avec support de l'API MediaDevices
-- Webcam fonctionnelle
-- Connexion internet pour le chargement des ressources
+- Python 3.x with dependencies listed in requirements.txt
+- Modern web browser with MediaDevices API support
+- Working webcam
+- Internet connection for loading resources
 
 ## Installation
 
-1. Clonez le dépôt ou décompressez l'archive dans un dossier de votre choix
-2. Installez les dépendances Python :
+1. Clone the repository or unzip the archive into a folder of your choice
+2. Install Python dependencies:
+
    ```
    cd facial-auth-system/backend
    pip install -r requirements.txt
    ```
 
-## Démarrage du système
+## Starting the System
 
-1. Lancez le serveur backend :
+1. Start the backend server:
    ```
    cd facial-auth-system/backend
    python app.py
    ```
-   Le serveur démarrera sur `http://localhost:5000`
+   The server will start at `http://localhost:5000`
 
-2. Servez les fichiers frontend (plusieurs options) :
-   - Utilisez un serveur HTTP simple :
+2. Serve the frontend files (several options):
+   - Use a simple HTTP server:
      ```
      cd facial-auth-system
      python -m http.server 8000
      ```
-     L'interface sera accessible sur `http://localhost:8000/frontend`
+     The interface will be available at `http://localhost:8000/frontend`
    
-   - Ou ouvrez directement le fichier `frontend/index.html` dans votre navigateur
+   - Or directly open the `frontend/index.html` file in your browser
 
-## Utilisation
+## Usage
 
-### Mode Utilisateur
+### User Mode
+1. Access the web interface
+2. Click "Start Webcam" to activate the camera
+3. Position your face in front of the camera
+4. Click "Capture" to launch detection and recognition
+5. The system will display:
+-"Face detected" if a face is present
+-Recognized user information (name, age, profession)
+-"Face not recognized" if the face is not in the database
 
-1. Accédez à l'interface web
-2. Cliquez sur "Démarrer la Webcam" pour activer la caméra
-3. Positionnez votre visage devant la caméra
-4. Cliquez sur "Capturer" pour lancer la détection et la reconnaissance
-5. Le système affichera :
-   - "Visage détecté" si un visage est présent
-   - Les informations de l'utilisateur reconnu (nom, âge, profession)
-   - "Visage non reconnu" si le visage n'est pas dans la base de données
+### Admin Mode 
 
-### Mode Administrateur
+1. Click "Admin Mode" at the bottom of the page to access administration features
+2. Available features :
+   - **Add a User** : Register a new face with user info 
+   - **View Logs** : Check access and attempt history 
 
-1. Cliquez sur "Mode Admin" en bas de page pour accéder aux fonctionnalités d'administration
-2. Fonctionnalités disponibles :
-   - **Ajouter un Utilisateur** : Enregistrer un nouveau visage avec des informations
-   - **Voir les Journaux** : Consulter l'historique des accès et tentatives
+#### Add User
 
-#### Ajouter un Utilisateur
-
-1. Cliquez sur "Ajouter un Utilisateur"
-2. Remplissez le formulaire avec les informations requises :
-   - Nom
-   - Âge
+1. Click "Add User"
+2. Fill in the form with required information:
+   - Name
+   - Age
    - Profession
-3. Utilisez la webcam pour capturer une photo du visage
-4. Cliquez sur "Enregistrer" pour ajouter l'utilisateur à la base de données
+3. Use the webcam to capture a photo of the face
+4. Click "Save" to add the user to the database
 
-#### Consulter les Journaux
+#### View Logs
 
-1. Cliquez sur "Voir les Journaux"
-2. Le système affichera un tableau avec l'historique des accès :
-   - Date/Heure
-   - Action (reconnaissance, ajout d'utilisateur, etc.)
-   - Utilisateur concerné
-   - Résultat de l'action
+1. Click "View Logs"
+2. The system will display a table with access history:
+-Date/Time
+-Action (recognition, user addition, etc.)
+-Related user
+-Result of the action1. Cliquez sur "Voir les Journaux"
 
-## Sécurité
+## Security 
 
-- Les communications entre le frontend et le backend sont sécurisées
-- Seuls les embeddings faciaux sont stockés, pas les images brutes
-- L'accès aux fonctionnalités d'administration est contrôlé
-- Les journaux d'accès permettent de suivre toutes les tentatives
+-Communication between frontend and backend is secured
+-Only facial embeddings are stored, not raw images
+-Access to admin features is controlled
+-Access logs track all attempts
 
-## Dépannage
+## Troubleshooting
 
-### La webcam ne démarre pas
+### The webcam doesn't start 
 
-- Vérifiez que vous avez accordé les permissions d'accès à la caméra dans votre navigateur
-- Assurez-vous qu'aucune autre application n'utilise la webcam
-- Essayez de rafraîchir la page ou de redémarrer le navigateur
+-Make sure you’ve granted camera permissions in your browser
+-Ensure no other application is using the webcam
+-Try refreshing the page or restarting the browser
 
-### Le visage n'est pas détecté
+### The face is not detected
 
-- Assurez-vous d'être bien éclairé et face à la caméra
-- Évitez les arrière-plans trop chargés
-- Vérifiez que votre visage est entièrement visible dans le cadre
+-Ensure you are well-lit and facing the camera
+-Avoid overly cluttered backgrounds
+-Ensure your face is fully visible in the frame
 
-### Le backend ne répond pas
+### The backend is not responding 
 
-- Vérifiez que le serveur backend est bien en cours d'exécution
-- Assurez-vous que le port 5000 n'est pas bloqué par un pare-feu
-- Vérifiez les logs du serveur pour d'éventuelles erreurs
+-Make sure the backend server is running
+-Ensure port 5000 isn’t blocked by a firewall
+-Check server logs for any errors
 
-## Personnalisation
+## Customization
 
-Le système peut être personnalisé de plusieurs façons :
+The system can be customized in various ways:
+-Modify CSS styles to change appearance
+-Adjust detection parameters in the backend for better accuracy
+-Add new features like liveness detection
 
-- Modifier les styles CSS pour changer l'apparence
-- Ajuster les paramètres de détection dans le backend pour plus de précision
-- Ajouter de nouvelles fonctionnalités comme la détection de vivacité
+## Known Limitations
 
-## Limitations connues
-
-- La reconnaissance faciale simple peut être sensible aux conditions d'éclairage
-- Le système ne dispose pas de détection de vivacité avancée (anti-spoofing)
-- La base de données utilise un stockage fichier simple (non adapté à la production à grande échelle)
+-Basic face recognition can be sensitive to lighting conditions
+-No advanced liveness (anti-spoofing) detection yet
+-The database uses simple file-based storage (not suited for large-scale production)
 
 ## Support
 
-Pour toute question ou problème, veuillez contacter l'équipe de support.
-"# Facial-Recognition-for-User-Authentication" 
+For any questions or issues, please contact the support team.
+"# Facial-Recognition-for-User-Authentication"
