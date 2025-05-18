@@ -137,14 +137,6 @@ Access by clicking **"Admin Mode"** at the bottom of the page.
 
 ---
 
-## 🎨 Customization
-
-* Modify frontend styles in `frontend/style.css`
-* Tweak OpenCV parameters in `backend/app.py` for accuracy
-* Extend features (e.g., add **liveness detection**, email alerts)
-
----
-
 ## ⚠️ Known Limitations
 
 * May struggle under low lighting or side-angle faces
@@ -155,4 +147,17 @@ Access by clicking **"Admin Mode"** at the bottom of the page.
 
 ## 📬 Support
 
-For help or feature requests, open an issue or contact the dev team at 
+📬 Support
+For help, questions, or to report issues, feel free to contact the team:
+
+📧 fhaallyosseer@gmail.com
+
+📧 teyebdouaa.3.math@gmail.com
+
+📧 bgt.jihane@gmail.com
+
+📧 islem.smiai@gmail.com
+
+📧 yazidiyassmine38@gmail.com
+
+
