@@ -1,0 +1,129 @@
+[
+  {
+    "timestamp": "2025-05-18T17:18:33",
+    "action": "recognition",
+    "result": "failure",
+    "message": "Visage non reconnu"
+  },
+  {
+    "timestamp": "2025-05-18T17:18:41",
+    "action": "recognition",
+    "result": "failure",
+    "message": "Visage non reconnu"
+  },
+  {
+    "timestamp": "2025-05-18T17:18:45",
+    "action": "recognition",
+    "result": "failure",
+    "message": "Visage non reconnu"
+  },
+  {
+    "timestamp": "2025-05-18T17:46:48",
+    "action": "recognition",
+    "result": "failure",
+    "message": "Visage non reconnu"
+  },
+  {
+    "timestamp": "2025-05-18T17:49:26",
+    "action": "recognition",
+    "result": "failure",
+    "message": "Visage non reconnu"
+  },
+  {
+    "timestamp": "2025-05-18T18:13:39",
+    "action": "user_added",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "name": "Yosser Fhal"
+  },
+  {
+    "timestamp": "2025-05-18T18:14:00",
+    "action": "recognition",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "result": "success",
+    "confidence": 65.04492629381684
+  },
+  {
+    "timestamp": "2025-05-18T18:14:33",
+    "action": "recognition",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "result": "success",
+    "confidence": 55.534529927838825
+  },
+  {
+    "timestamp": "2025-05-18T18:14:47",
+    "action": "recognition",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "result": "success",
+    "confidence": 48.51399298217781
+  },
+  {
+    "timestamp": "2025-05-18T18:14:53",
+    "action": "recognition",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "result": "success",
+    "confidence": 41.78260274131079
+  },
+  {
+    "timestamp": "2025-05-18T18:15:01",
+    "action": "recognition",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "result": "success",
+    "confidence": 49.66360672767009
+  },
+  {
+    "timestamp": "2025-05-18T18:15:04",
+    "action": "recognition",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "result": "success",
+    "confidence": 46.819621883363126
+  },
+  {
+    "timestamp": "2025-05-18T18:15:09",
+    "action": "recognition",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "result": "success",
+    "confidence": 43.27994553169342
+  },
+  {
+    "timestamp": "2025-05-18T18:15:13",
+    "action": "recognition",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "result": "success",
+    "confidence": 48.59133678670283
+  },
+  {
+    "timestamp": "2025-05-18T18:15:16",
+    "action": "recognition",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "result": "success",
+    "confidence": 49.51042265996117
+  },
+  {
+    "timestamp": "2025-05-18T18:15:32",
+    "action": "recognition",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "result": "success",
+    "confidence": 57.16699532588388
+  },
+  {
+    "timestamp": "2025-05-18T18:15:41",
+    "action": "recognition",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "result": "success",
+    "confidence": 42.195200272446634
+  },
+  {
+    "timestamp": "2025-05-18T18:53:30",
+    "action": "recognition",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "result": "success",
+    "confidence": 36.261767977863954
+  },
+  {
+    "timestamp": "2025-05-18T18:53:49",
+    "action": "recognition",
+    "user_id": "dcd74620-603d-4188-b64a-18e5da0697a8",
+    "result": "success",
+    "confidence": 7.545656074571305
+  }
+]

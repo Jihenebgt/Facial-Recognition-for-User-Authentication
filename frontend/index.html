@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Système d'Authentification Faciale</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Système d'Authentification Faciale</h1>
+            <p class="subtitle">Reconnaissance faciale en temps réel avec OpenCV</p>
+        </header>
+
+        <main>
+            <section class="webcam-container">
+                <div class="video-wrapper">
+                    <video id="webcam" autoplay playsinline></video>
+                    <canvas id="canvas" class="overlay"></canvas>
+                    <div id="loading-indicator" class="hidden">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+                <div class="controls">
+                    <button id="start-webcam" class="btn primary">Démarrer la Webcam</button>
+                    <button id="capture" class="btn secondary" disabled>Capturer</button>
+                </div>
+            </section>
+
+            <section class="result-container">
+                <div class="status-box">
+                    <h2>Statut</h2>
+                    <div id="status-message" class="status-message">En attente de la webcam...</div>
+                </div>
+                
+                <div class="recognition-result">
+                    <h2>Résultat</h2>
+                    <div id="result-box" class="result-box">
+                        <div id="user-info" class="user-info hidden">
+                            <div class="user-photo">
+                                <img id="user-photo" src="" alt="Photo de l'utilisateur">
+                            </div>
+                            <div class="user-details">
+                                <h3 id="user-name">-</h3>
+                                <p id="user-age">-</p>
+                                <p id="user-profession">-</p>
+                                <p id="confidence">-</p>
+                            </div>
+                        </div>
+                        <div id="no-recognition" class="no-recognition">
+                            <p>Aucune reconnaissance en cours</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="admin-section hidden" id="admin-section">
+                <h2>Administration</h2>
+                <div class="admin-controls">
+                    <button id="add-user" class="btn primary">Ajouter un Utilisateur</button>
+                    <button id="view-logs" class="btn secondary">Voir les Journaux</button>
+                </div>
+                
+                <div id="add-user-form" class="form-container hidden">
+                    <h3>Ajouter un Nouvel Utilisateur</h3>
+                    <form id="user-form">
+                        <div class="form-group">
+                            <label for="name">Nom</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Âge</label>
+                            <input type="number" id="age" name="age" min="1" max="120" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="profession">Profession</label>
+                            <input type="text" id="profession" name="profession" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Photo</label>
+                            <div class="capture-container">
+                                <video id="admin-webcam" autoplay playsinline></video>
+                                <canvas id="admin-canvas" class="hidden"></canvas>
+                                <button type="button" id="admin-capture" class="btn secondary">Capturer</button>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn primary">Enregistrer</button>
+                            <button type="button" id="cancel-add-user" class="btn secondary">Annuler</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div id="logs-container" class="logs-container hidden">
+                    <h3>Journaux d'Accès</h3>
+                    <div class="logs-table-container">
+                        <table id="logs-table">
+                            <thead>
+                                <tr>
+                                    <th>Date/Heure</th>
+                                    <th>Action</th>
+                                    <th>Utilisateur</th>
+                                    <th>Résultat</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logs-body">
+                                <!-- Les entrées de journal seront ajoutées ici dynamiquement -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="close-logs" class="btn secondary">Fermer</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Système d'Authentification Faciale | Développé avec OpenCV et Flask</p>
+            <button id="toggle-admin" class="btn text">Mode Admin</button>
+        </footer>
+    </div>
+
+    <!-- Modal pour les messages -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="modal-title">Message</h3>
+            <p id="modal-message"></p>
+            <div class="modal-actions">
+                <button id="modal-ok" class="btn primary">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/webcam.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>
