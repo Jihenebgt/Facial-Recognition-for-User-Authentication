@@ -1,131 +1,158 @@
-##User Guide for the Facial Authentication System
+# 🧠 Facial Recognition for User Authentication
 
-## Overview
+## 🧾 Overview
 
-This facial authentication system uses OpenCV and Python for face detection and recognition, with a web interface built in HTML, CSS, and JavaScript. It allows real-time face detection and recognition via a webcam.
+This facial authentication system uses **Python (OpenCV + Flask)** for real-time face detection and recognition, and a **web-based interface** built with HTML, CSS, and JavaScript. Users can interact with the system via a webcam for authentication, registration, and access log viewing.
 
-## System Architecture
+---
 
-The system is composed of two main parts:
+## 🧩 System Architecture
 
-1. **Backend** : Python Flask server with OpenCV handling face detection and recognition
-2. **Frontend** : Web interface allowing user interaction and video capture
+The system is composed of two main components:
 
-## Prerequisites
+* 🔙 **Backend**:
+  Python Flask server with OpenCV for face detection, recognition, and user management.
 
-- Python 3.x with dependencies listed in requirements.txt
-- Modern web browser with MediaDevices API support
-- Working webcam
-- Internet connection for loading resources
+* 🌐 **Frontend**:
+  Web interface for video capture, user interaction, and administration.
 
-## Installation
+---
 
-1. Clone the repository or unzip the archive into a folder of your choice
-2. Install Python dependencies:
+## 🧱 Prerequisites
 
+* Python 3.x
+* A working webcam
+* A modern browser supporting the **MediaDevices API**
+* Internet connection (for loading resources, if required)
+* Install Python dependencies via:
+
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+---
+
+## ⚙️ Installation
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/your-username/facial-auth-system.git
    ```
+
+2. **Install backend dependencies**:
+
+   ```bash
    cd facial-auth-system/backend
    pip install -r requirements.txt
    ```
 
-## Starting the System
+---
 
-1. Start the backend server:
-   ```
-   cd facial-auth-system/backend
-   python app.py
-   ```
-   The server will start at `http://localhost:5000`
+## 🚀 Starting the System
 
-2. Serve the frontend files (several options):
-   - Use a simple HTTP server:
-     ```
-     cd facial-auth-system
-     python -m http.server 8000
-     ```
-     The interface will be available at `http://localhost:8000/frontend`
-   
-   - Or directly open the `frontend/index.html` file in your browser
+### 1. Start the Flask Backend
 
-## Usage
+```bash
+cd facial-auth-system/backend
+python app.py
+```
 
-### User Mode
-1. Access the web interface
-2. Click "Start Webcam" to activate the camera
-3. Position your face in front of the camera
-4. Click "Capture" to launch detection and recognition
-5. The system will display:
--"Face detected" if a face is present
--Recognized user information (name, age, profession)
--"Face not recognized" if the face is not in the database
+Server runs at: [http://localhost:5000](http://localhost:5000)
 
-### Admin Mode 
+### 2. Serve the Frontend
 
-1. Click "Admin Mode" at the bottom of the page to access administration features
-2. Available features :
-   - **Add a User** : Register a new face with user info 
-   - **View Logs** : Check access and attempt history 
+#### Option A: Use a simple Python HTTP server
 
-#### Add User
+```bash
+cd facial-auth-system
+python -m http.server 8000
+```
 
-1. Click "Add User"
-2. Fill in the form with required information:
-   - Name
-   - Age
-   - Profession
-3. Use the webcam to capture a photo of the face
-4. Click "Save" to add the user to the database
+Then open: [http://localhost:8000/frontend](http://localhost:8000/frontend)
 
-#### View Logs
+#### Option B: Open HTML directly
 
-1. Click "View Logs"
-2. The system will display a table with access history:
--Date/Time
--Action (recognition, user addition, etc.)
--Related user
--Result of the action1. Cliquez sur "Voir les Journaux"
+* Open `frontend/index.html` in your browser.
 
-## Security 
+---
 
--Communication between frontend and backend is secured
--Only facial embeddings are stored, not raw images
--Access to admin features is controlled
--Access logs track all attempts
+## 🧑‍💻 Usage Guide
 
-## Troubleshooting
+### 👤 User Mode
 
-### The webcam doesn't start 
+1. Open the web interface.
+2. Click **"Start Webcam"**.
+3. Face the webcam directly and click **"Capture"**.
+4. System Response:
 
--Make sure you’ve granted camera permissions in your browser
--Ensure no other application is using the webcam
--Try refreshing the page or restarting the browser
+   * ✅ `"Face detected"` if a face is recognized.
+   * ✅ Displays **name, age, profession** if user is known.
+   * ❌ `"Face not recognized"` if unknown.
 
-### The face is not detected
+---
 
--Ensure you are well-lit and facing the camera
--Avoid overly cluttered backgrounds
--Ensure your face is fully visible in the frame
+### 🔐 Admin Mode
 
-### The backend is not responding 
+Access by clicking **"Admin Mode"** at the bottom of the page.
 
--Make sure the backend server is running
--Ensure port 5000 isn’t blocked by a firewall
--Check server logs for any errors
+#### ➕ Add User
 
-## Customization
+1. Click **"Add User"**.
+2. Fill in:
 
-The system can be customized in various ways:
--Modify CSS styles to change appearance
--Adjust detection parameters in the backend for better accuracy
--Add new features like liveness detection
+   * Name
+   * Age
+   * Profession
+3. Capture face via webcam.
+4. Click **"Save"**.
 
-## Known Limitations
+#### 📄 View Logs
 
--Basic face recognition can be sensitive to lighting conditions
--No advanced liveness (anti-spoofing) detection yet
--The database uses simple file-based storage (not suited for large-scale production)
+* Click **"View Logs"** to see a table of system activity:
 
-## Support
+  * Date/Time
+  * Action type (e.g., recognition, user added)
+  * User info
+  * Result
 
-For any questions or issues, please contact the support team.
-"# Facial-Recognition-for-User-Authentication"
+---
+
+## 🔐 Security
+
+* Only **facial embeddings** are stored (no raw images).
+* Admin functionality is protected.
+* All backend communication is secured.
+* Access logs track every system interaction.
+
+---
+
+## 🧰 Troubleshooting
+
+| Problem                | Solution                                           |
+| ---------------------- | -------------------------------------------------- |
+| Webcam doesn’t start   | Allow camera in browser, close other apps, refresh |
+| Face not detected      | Ensure good lighting and full face visibility      |
+| Backend not responding | Check if Flask server is running and port is open  |
+
+---
+
+## 🎨 Customization
+
+* Modify frontend styles in `frontend/style.css`
+* Tweak OpenCV parameters in `backend/app.py` for accuracy
+* Extend features (e.g., add **liveness detection**, email alerts)
+
+---
+
+## ⚠️ Known Limitations
+
+* May struggle under low lighting or side-angle faces
+* No spoof detection (e.g., photos or videos)
+* Uses basic file-based database (not suitable for large-scale deployment)
+
+---
+
+## 📬 Support
+
+For help or feature requests, open an issue or contact the dev team at 
