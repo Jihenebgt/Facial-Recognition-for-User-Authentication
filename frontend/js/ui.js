@@ -1,8 +1,8 @@
 /**
- * ui.js - Gestion de l'interface utilisateur pour le système d'authentification faciale
+ * ui.js - User interface management for the facial authentification system 
  */
 
-// Éléments DOM globaux
+// Global DOM elements 
 const statusMessage = document.getElementById('status-message');
 const userInfo = document.getElementById('user-info');
 const noRecognition = document.getElementById('no-recognition');
@@ -29,30 +29,30 @@ const modalMessage = document.getElementById('modal-message');
 const modalOkButton = document.getElementById('modal-ok');
 const closeModalButton = document.querySelector('.close-modal');
 
-// Variables d'état
+// State Variables 
 let isAdminMode = false;
 let isRecognizing = false;
 let adminWebcamManager = null;
 
 /**
- * Met à jour le message de statut
- * @param {string} message - Message à afficher
- * @param {string} type - Type de message (info, success, error, warning)
+ * Update the status message 
+ * @param {string} message - Message to display 
+ * @param {string} type - Type of message (info, success, error, warning)
  */
 function updateStatus(message, type = 'info') {
     statusMessage.textContent = message;
     
-    // Supprimer toutes les classes de statut
+    // Delete all status classes 
     statusMessage.classList.remove('status-info', 'status-success', 'status-error', 'status-warning');
     
-    // Ajouter la classe correspondante au type
+    // Add the class that corresponds to the type
     statusMessage.classList.add(`status-${type}`);
 }
 
 /**
- * Affiche une boîte de dialogue modale
- * @param {string} title - Titre de la boîte de dialogue
- * @param {string} message - Message à afficher
+ * Display a modal dialogue box 
+ * @param {string} title - Title of the dialogue box
+ * @param {string} message - Message to display 
  */
 function showModal(title, message) {
     modalTitle.textContent = title;
@@ -61,35 +61,35 @@ function showModal(title, message) {
 }
 
 /**
- * Ferme la boîte de dialogue modale
+ * Close the modal dialogue box 
  */
 function closeModal() {
     modal.classList.add('hidden');
 }
 
 /**
- * Affiche les informations de l'utilisateur reconnu
- * @param {object} user - Informations de l'utilisateur
- * @param {number} confidence - Niveau de confiance (0-100)
- * @param {string} photoUrl - URL de la photo annotée
+ * Display the information of the recognized user
+ * @param {object} user - Informations of the user
+ * @param {number} confidence - Confiance interval (0-100)
+ * @param {string} photoUrl - URL of the annoted photo 
  */
 function displayUserInfo(user, confidence, photoUrl) {
-    // Masquer le message "Aucune reconnaissance"
+    // Hide the message "No recognition"
     noRecognition.classList.add('hidden');
     
-    // Afficher les informations de l'utilisateur
+    // Display the info of the user 
     userInfo.classList.remove('hidden');
     
-    // Mettre à jour les informations
+    // Update information
     userName.textContent = user.name;
     userAge.textContent = `Âge: ${user.age} ans`;
     userProfession.textContent = `Profession: ${user.profession}`;
     userConfidence.textContent = `Confiance: ${confidence.toFixed(2)}%`;
     
-    // Mettre à jour la photo
+    // Update the photo
     userPhoto.src = photoUrl;
     
-    // Mettre à jour le statut
+    // Update the statut
     updateStatus(`Utilisateur reconnu: ${user.name}`, 'success');
 }
 
@@ -97,13 +97,13 @@ function displayUserInfo(user, confidence, photoUrl) {
  * Réinitialise l'affichage des informations utilisateur
  */
 function resetUserInfo() {
-    // Masquer les informations de l'utilisateur
+    // Hide user information
     userInfo.classList.add('hidden');
     
-    // Afficher le message "Aucune reconnaissance"
+    // Display the message "No recognition"
     noRecognition.classList.remove('hidden');
     
-    // Réinitialiser les informations
+    // Reinitialise the info
     userName.textContent = '-';
     userAge.textContent = '-';
     userProfession.textContent = '-';
@@ -112,7 +112,7 @@ function resetUserInfo() {
 }
 
 /**
- * Initialise le gestionnaire de webcam pour l'administration
+ * Initialise the webcam manager for the administration
  */
 function initAdminWebcam() {
     if (adminWebcamManager) return;
@@ -121,7 +121,7 @@ function initAdminWebcam() {
     const adminCanvasElement = document.getElementById('admin-canvas');
     const adminCaptureButton = document.getElementById('admin-capture');
     
-    // Créer un gestionnaire de webcam pour l'administration
+    // Create the webcam manager for the administration
     adminWebcamManager = {
         webcamElement: adminWebcamElement,
         canvasElement: adminCanvasElement,
@@ -131,7 +131,7 @@ function initAdminWebcam() {
         
         async start() {
             try {
-                // Demander l'accès à la webcam
+                // Demand the access to the webcam
                 this.stream = await navigator.mediaDevices.getUserMedia({
                     video: {
                         width: { ideal: 320 },
@@ -140,38 +140,38 @@ function initAdminWebcam() {
                     }
                 });
                 
-                // Configurer la vidéo
+                // Configurate the video
                 this.webcamElement.srcObject = this.stream;
                 
-                // Attendre que la vidéo soit chargée
+                // Wait for the video to load 
                 await new Promise(resolve => {
                     this.webcamElement.onloadedmetadata = () => {
                         resolve();
                     };
                 });
                 
-                // Configurer le canvas
+                // Configurate the canvas
                 this.canvasElement.width = this.webcamElement.videoWidth;
                 this.canvasElement.height = this.webcamElement.videoHeight;
                 
-                // Mettre à jour l'état
+                // Update the state
                 this.isRunning = true;
             } catch (error) {
-                console.error('Erreur lors de l\'accès à la webcam admin:', error);
-                showModal('Erreur', 'Impossible d\'accéder à la webcam pour l\'ajout d\'utilisateur. Veuillez vérifier les permissions.');
+                console.error('Error accessing the admin webcam', error);
+                showModal('Error', 'Unable to access the webcam for user addition. Please check the permissions.');
             }
         },
         
         stop() {
             if (this.stream) {
-                // Arrêter tous les tracks de la webcam
+                // Stop all tracks of the webcam
                 this.stream.getTracks().forEach(track => track.stop());
                 this.stream = null;
                 
-                // Effacer la vidéo
+                // Delete the video
                 this.webcamElement.srcObject = null;
                 
-                // Mettre à jour l'état
+                // Update the state
                 this.isRunning = false;
             }
         },
@@ -179,9 +179,9 @@ function initAdminWebcam() {
         captureImage() {
             if (!this.isRunning) return null;
             
-            // Dessiner l'image de la webcam sur le canvas (en miroir)
+            // Draw the webcam image on the canvas (mirrored)
             this.canvasContext.save();
-            this.canvasContext.scale(-1, 1); // Inverser horizontalement
+            this.canvasContext.scale(-1, 1); // Flip horizontally
             this.canvasContext.drawImage(
                 this.webcamElement,
                 -this.canvasElement.width, 0,
@@ -189,32 +189,32 @@ function initAdminWebcam() {
             );
             this.canvasContext.restore();
             
-            // Obtenir l'image en base64
+            // Obtain the image in base64
             return this.canvasElement.toDataURL('image/jpeg');
         }
     };
     
-    // Ajouter l'écouteur d'événement pour la capture
+    // Add the event listener for capturing 
     adminCaptureButton.addEventListener('click', () => {
         if (!adminWebcamManager.isRunning) {
-            showModal('Erreur', 'La webcam n\'est pas active. Veuillez réessayer.');
+            showModal('Error', 'The webcam is not actived. Please try again');
             return;
         }
         
-        // Capturer l'image
+        // Capture the image
         const imageData = adminWebcamManager.captureImage();
         
-        // Afficher l'image capturée
+        // Display the captured image
         adminCanvasElement.classList.remove('hidden');
         adminWebcamElement.classList.add('hidden');
         
-        // Stocker l'image dans un champ caché pour l'envoi du formulaire
+        // Store the image in a hidden field for form submission 
         const imageInput = document.createElement('input');
         imageInput.type = 'hidden';
         imageInput.name = 'image_data';
         imageInput.value = imageData;
         
-        // Remplacer l'ancien champ s'il existe
+        // Replace the old field if it exists
         const oldImageInput = userForm.querySelector('input[name="image_data"]');
         if (oldImageInput) {
             userForm.removeChild(oldImageInput);
@@ -225,64 +225,64 @@ function initAdminWebcam() {
 }
 
 /**
- * Initialise les écouteurs d'événements pour l'interface utilisateur
+ * Initialize the event listeners for the user interface.
  */
 function initEventListeners() {
-    // Capture d'image
+    // Capture the image
     captureButton.addEventListener('click', async () => {
         if (isRecognizing) return;
         
         try {
             isRecognizing = true;
             
-            // Capturer l'image
+            // Capture the image
             const imageData = webcamManager.captureImage();
             if (!imageData) {
-                updateStatus('Erreur: Impossible de capturer l\'image.', 'error');
+                updateStatus('Error: Unable to capture the image.', 'error');
                 isRecognizing = false;
                 return;
             }
             
-            // Détecter les visages
+            // Detect faces
             const detectionResult = await apiService.detectFace(imageData);
             
             if (detectionResult.faces_detected === 0) {
-                updateStatus('Aucun visage détecté. Veuillez vous positionner face à la caméra.', 'warning');
+                updateStatus('No face detected. Please position yourself facing the camera. Unable to capture the image.', 'warning');
                 resetUserInfo();
                 isRecognizing = false;
                 return;
             }
             
-            updateStatus(`${detectionResult.faces_detected} visage(s) détecté(s). Reconnaissance en cours...`, 'info');
+            updateStatus(`${detectionResult.faces_detected} face(s) detected. Recognition in progress...`, 'info');
             
-            // Reconnaître le visage
+            // Recognize the face 
             const recognitionResult = await apiService.recognizeFace(imageData);
             
             if (recognitionResult.recognized) {
-                // Afficher les informations de l'utilisateur
+                // Display user info
                 displayUserInfo(
                     recognitionResult.user,
                     recognitionResult.confidence,
                     recognitionResult.annotated_image
                 );
             } else {
-                // Réinitialiser l'affichage
+                // Reinitialise the display 
                 resetUserInfo();
                 updateStatus('Visage non reconnu.', 'warning');
                 
-                // Afficher l'image annotée si disponible
+                // Display the annotated image if available
                 if (recognitionResult.annotated_image) {
                     userPhoto.src = recognitionResult.annotated_image;
                     userInfo.classList.remove('hidden');
                     noRecognition.classList.add('hidden');
-                    userName.textContent = 'Inconnu';
+                    userName.textContent = 'Unknown';
                     userAge.textContent = '-';
                     userProfession.textContent = '-';
                     userConfidence.textContent = '-';
                 }
             }
         } catch (error) {
-            console.error('Erreur lors de la reconnaissance:', error);
+            console.error('Error during recognition:', error);
             updateStatus(`Erreur: ${error.message}`, 'error');
             resetUserInfo();
         } finally {
@@ -290,7 +290,7 @@ function initEventListeners() {
         }
     });
     
-    // Basculer en mode admin
+    // Switch to admin mode
     toggleAdminButton.addEventListener('click', () => {
         isAdminMode = !isAdminMode;
         
@@ -301,118 +301,118 @@ function initEventListeners() {
             adminSection.classList.add('hidden');
             toggleAdminButton.textContent = 'Mode Admin';
             
-            // Masquer les sous-sections
+            // Hide the subsections
             addUserForm.classList.add('hidden');
             logsContainer.classList.add('hidden');
             
-            // Arrêter la webcam admin si active
+            // Stop the admin webcam if active
             if (adminWebcamManager && adminWebcamManager.isRunning) {
                 adminWebcamManager.stop();
             }
         }
     });
     
-    // Afficher le formulaire d'ajout d'utilisateur
+    // Show the user addition form
     addUserButton.addEventListener('click', async () => {
         addUserForm.classList.remove('hidden');
         logsContainer.classList.add('hidden');
         
-        // Initialiser la webcam admin
+        // Initialise the admin webcam 
         initAdminWebcam();
         
-        // Démarrer la webcam admin
+        // Start the admin webcam 
         if (adminWebcamManager && !adminWebcamManager.isRunning) {
             await adminWebcamManager.start();
         }
         
-        // Réinitialiser le formulaire
+        // Reinitialise  the form
         userForm.reset();
         
-        // Afficher la vidéo et masquer le canvas
+        // Show the video and hide the canvas
         document.getElementById('admin-webcam').classList.remove('hidden');
         document.getElementById('admin-canvas').classList.add('hidden');
     });
     
-    // Annuler l'ajout d'utilisateur
+    // Cancel the user addition
     cancelAddUserButton.addEventListener('click', () => {
         addUserForm.classList.add('hidden');
         
-        // Arrêter la webcam admin
+        // Stop the admin webcam 
         if (adminWebcamManager && adminWebcamManager.isRunning) {
             adminWebcamManager.stop();
         }
     });
     
-    // Soumettre le formulaire d'ajout d'utilisateur
+    // Submit the user addition form
     userForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         
-        // Récupérer les données du formulaire
+        // Retrieve the form data
         const name = document.getElementById('name').value;
         const age = parseInt(document.getElementById('age').value);
         const profession = document.getElementById('profession').value;
         const imageData = userForm.querySelector('input[name="image_data"]')?.value;
         
         if (!imageData) {
-            showModal('Erreur', 'Veuillez capturer une photo avant de soumettre le formulaire.');
+            showModal('Error', 'Please take a photo before submitting the form.');
             return;
         }
         
         try {
-            // Ajouter l'utilisateur
+            // Add a user
             const result = await apiService.addUser(name, age, profession, imageData);
             
             if (result.success) {
-                showModal('Succès', `L'utilisateur ${name} a été ajouté avec succès.`);
+                showModal('Success', `User ${name} has been successfully added.`);
                 
-                // Masquer le formulaire
+                // Hide the form
                 addUserForm.classList.add('hidden');
                 
-                // Arrêter la webcam admin
+                // Stop the admin webcam 
                 if (adminWebcamManager && adminWebcamManager.isRunning) {
                     adminWebcamManager.stop();
                 }
             } else {
-                showModal('Erreur', result.error || 'Une erreur est survenue lors de l\'ajout de l\'utilisateur.');
+                showModal('Error', result.error || 'An error occurred while adding the user.');
             }
         } catch (error) {
-            console.error('Erreur lors de l\'ajout de l\'utilisateur:', error);
-            showModal('Erreur', `Une erreur est survenue: ${error.message}`);
+            console.error('Error while adding the user:', error);
+            showModal('Error', `An error has occurred: ${error.message}`);
         }
     });
     
-    // Afficher les journaux
+    // Show the logs
     viewLogsButton.addEventListener('click', async () => {
         logsContainer.classList.remove('hidden');
         addUserForm.classList.add('hidden');
         
-        // Arrêter la webcam admin si active
+        // Stop the admin webcam if active
         if (adminWebcamManager && adminWebcamManager.isRunning) {
             adminWebcamManager.stop();
         }
         
         try {
-            // Récupérer les journaux
+            // Retrieve the logs
             const result = await apiService.getLogs();
             
-            // Vider le tableau
+            // Empty the table
             logsBody.innerHTML = '';
             
             if (result.logs && result.logs.length > 0) {
-                // Trier les journaux par date (du plus récent au plus ancien)
+                // Sort the newspapers by date (from the most recent to the oldest)
                 const sortedLogs = result.logs.sort((a, b) => {
                     return new Date(b.timestamp) - new Date(a.timestamp);
                 });
                 
-                // Ajouter les entrées au tableau
+                // Add the entries to the table
                 sortedLogs.forEach(log => {
                     const row = document.createElement('tr');
                     
-                    // Formater la date
+                    // Format the date
                     const date = new Date(log.timestamp);
                     const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
                     
-                    // Créer les cellules
+                    // Create cells
                     const dateCell = document.createElement('td');
                     dateCell.textContent = formattedDate;
                     
@@ -425,29 +425,29 @@ function initEventListeners() {
                     const resultCell = document.createElement('td');
                     resultCell.textContent = log.result || '-';
                     
-                    // Ajouter les cellules à la ligne
+                    // Add the cells to the row
                     row.appendChild(dateCell);
                     row.appendChild(actionCell);
                     row.appendChild(userCell);
                     row.appendChild(resultCell);
                     
-                    // Ajouter la ligne au tableau
+                    // Add the line to the table
                     logsBody.appendChild(row);
                 });
             } else {
-                // Aucun journal
+                // No journal
                 const row = document.createElement('tr');
                 const cell = document.createElement('td');
                 cell.colSpan = 4;
-                cell.textContent = 'Aucun journal disponible.';
+                cell.textContent = 'No journal available.';
                 cell.style.textAlign = 'center';
                 row.appendChild(cell);
                 logsBody.appendChild(row);
             }
         } catch (error) {
-            console.error('Erreur lors de la récupération des journaux:', error);
+            console.error('Error while retrieving the logs:', error);
             
-            // Afficher un message d'erreur
+            // Display an error message
             const row = document.createElement('tr');
             const cell = document.createElement('td');
             cell.colSpan = 4;
@@ -459,16 +459,16 @@ function initEventListeners() {
         }
     });
     
-    // Fermer les journaux
+    // Close the journals
     closeLogsButton.addEventListener('click', () => {
         logsContainer.classList.add('hidden');
     });
     
-    // Fermer la boîte de dialogue modale
+    // Close the modal dialog box
     modalOkButton.addEventListener('click', closeModal);
     closeModalButton.addEventListener('click', closeModal);
     
-    // Fermer la boîte de dialogue modale en cliquant en dehors
+    // Close the modal dialog by clicking outside
     modal.addEventListener('click', (event) => {
         if (event.target === modal) {
             closeModal();
@@ -477,27 +477,27 @@ function initEventListeners() {
 }
 
 /**
- * Initialise l'application
+ * Initialise the app
  */
 async function initApp() {
     try {
-        // Vérifier l'état de l'API
+        // Check the status of the API
         const healthCheck = await apiService.checkHealth();
         console.log('API status:', healthCheck);
         
-        // Initialiser les écouteurs d'événements
+        // Initialize the event listeners
         initEventListeners();
         
-        // Mettre à jour le statut
-        updateStatus('Prêt. Cliquez sur "Démarrer la Webcam" pour commencer.', 'info');
+        // Update the statut
+        updateStatus('Ready. Click on "Start Webcam" to begin.', 'info');
     } catch (error) {
-        console.error('Erreur lors de l\'initialisation:', error);
-        updateStatus('Erreur: Impossible de se connecter à l\'API. Veuillez vérifier que le serveur est en cours d\'exécution.', 'error');
+        console.error('Error during initialization:', error);
+        updateStatus('Error: Unable to connect to the API. Please check that the server is running.', 'error');
         
-        // Afficher une alerte
-        showModal('Erreur de connexion', 'Impossible de se connecter à l\'API. Veuillez vérifier que le serveur backend est en cours d\'exécution sur http://localhost:5000.');
+        // Show an alert
+        showModal('Connection error' , 'Unable to connect to the API. Please check that the backend server is running on http://localhost:5000.');
     }
 }
 
-// Initialiser l'application au chargement de la page
+// Initialize the application on page load
 document.addEventListener('DOMContentLoaded', initApp);
