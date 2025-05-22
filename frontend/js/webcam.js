@@ -1,34 +1,34 @@
 /**
- * webcam.js - Gestion de la webcam pour le système d'authentification faciale
+ * webcam.js - Webcam management for the facial recognition authentication system
  */
 
 class WebcamManager {
     constructor() {
-        // Éléments DOM
+        // DOM Elements
         this.webcamElement = document.getElementById('webcam');
         this.canvasElement = document.getElementById('canvas');
         this.startButton = document.getElementById('start-webcam');
         this.captureButton = document.getElementById('capture');
         this.loadingIndicator = document.getElementById('loading-indicator');
         
-        // Contexte du canvas
+        // Canvas context
         this.canvasContext = this.canvasElement.getContext('2d');
         
-        // État
+        // State
         this.stream = null;
         this.isRunning = false;
         this.captureInterval = null;
         this.autoCapture = false;
-        this.autoCaptureInterval = 3000; // 3 secondes
+        this.autoCaptureInterval = 3000; // 3 seconds
         
-        // Lier les méthodes au contexte de la classe
+        // Link the methods to the context of the class
         this.start = this.start.bind(this);
         this.stop = this.stop.bind(this);
         this.captureImage = this.captureImage.bind(this);
         this.startAutoCapture = this.startAutoCapture.bind(this);
         this.stopAutoCapture = this.stopAutoCapture.bind(this);
         
-        // Initialiser les écouteurs d'événements
+        // Initialize the event listeners
         this.initEventListeners();
     }
     
@@ -39,10 +39,10 @@ class WebcamManager {
     
     async start() {
         try {
-            // Afficher l'indicateur de chargement
+            // Show the loading indicator
             this.loadingIndicator.classList.remove('hidden');
             
-            // Demander l'accès à la webcam
+            // Request access to the webcam
             this.stream = await navigator.mediaDevices.getUserMedia({
                 video: {
                     width: { ideal: 640 },
@@ -51,76 +51,76 @@ class WebcamManager {
                 }
             });
             
-            // Configurer la vidéo
+            // Set up the video
             this.webcamElement.srcObject = this.stream;
             
-            // Attendre que la vidéo soit chargée
+            // Wait for the video to load
             await new Promise(resolve => {
                 this.webcamElement.onloadedmetadata = () => {
                     resolve();
                 };
             });
             
-            // Configurer le canvas
+            // Set up the canvas
             this.canvasElement.width = this.webcamElement.videoWidth;
             this.canvasElement.height = this.webcamElement.videoHeight;
             
-            // Mettre à jour l'état
+            // Update the status
             this.isRunning = true;
             
-            // Mettre à jour l'interface
-            this.startButton.textContent = 'Arrêter la Webcam';
+            // Update the interface
+            this.startButton.textContent = 'Stop the Webcam';
             this.startButton.classList.remove('primary');
             this.startButton.classList.add('secondary');
             this.captureButton.disabled = false;
             
-            // Masquer l'indicateur de chargement
+            // Hide the loading indicator
             this.loadingIndicator.classList.add('hidden');
             
-            // Mettre à jour le statut
-            updateStatus('Webcam active. Placez votre visage devant la caméra.', 'info');
+            // Update the status
+            updateStatus('Webcam active. Place your face in front of the camera.', 'info');
             
-            // Modifier l'écouteur d'événements pour arrêter la webcam
+            // Modify the event listener to stop the webcam
             this.startButton.removeEventListener('click', this.start);
             this.startButton.addEventListener('click', this.stop);
         } catch (error) {
-            console.error('Erreur lors de l\'accès à la webcam:', error);
-            updateStatus('Erreur: Impossible d\'accéder à la webcam. Vérifiez les permissions.', 'error');
+            console.error('Error accessing the webcam:', error);
+            updateStatus('Error: Unable to access the webcam. Check the permissions.', 'error');
             this.loadingIndicator.classList.add('hidden');
             
-            // Afficher une alerte
-            showModal('Erreur', 'Impossible d\'accéder à la webcam. Veuillez vérifier que vous avez accordé les permissions nécessaires et qu\'aucune autre application n\'utilise la caméra.');
+            // Show an alert
+            showModal('Error', 'Unable to access the webcam. Please check that you have granted the necessary permissions and that no other application is using the camera.');
         }
     }
     
     stop() {
         if (this.stream) {
-            // Arrêter tous les tracks de la webcam
+            // Stop all the webcam tracks
             this.stream.getTracks().forEach(track => track.stop());
             this.stream = null;
             
-            // Effacer la vidéo
+            // Delete the video
             this.webcamElement.srcObject = null;
             
-            // Effacer le canvas
+            // Clear the canvas
             this.canvasContext.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
             
-            // Mettre à jour l'état
+            // Update the status
             this.isRunning = false;
             
-            // Arrêter la capture automatique si active
+            // Stop automatic capture if active
             this.stopAutoCapture();
             
-            // Mettre à jour l'interface
-            this.startButton.textContent = 'Démarrer la Webcam';
+            // Update the interface
+            this.startButton.textContent = 'Start the Webcam';
             this.startButton.classList.remove('secondary');
             this.startButton.classList.add('primary');
             this.captureButton.disabled = true;
             
-            // Mettre à jour le statut
-            updateStatus('Webcam arrêtée.', 'info');
+            // Update the status
+            updateStatus('Webcam stopped.', 'info');
             
-            // Réinitialiser l'écouteur d'événements
+            // Reset the event listener
             this.startButton.removeEventListener('click', this.stop);
             this.startButton.addEventListener('click', this.start);
         }
@@ -129,9 +129,9 @@ class WebcamManager {
     captureImage() {
         if (!this.isRunning) return null;
         
-        // Dessiner l'image de la webcam sur le canvas (en miroir)
+        // Draw the webcam image on the canvas (mirrored)
         this.canvasContext.save();
-        this.canvasContext.scale(-1, 1); // Inverser horizontalement
+        this.canvasContext.scale(-1, 1); // Flip horizontally
         this.canvasContext.drawImage(
             this.webcamElement,
             -this.canvasElement.width, 0,
@@ -139,11 +139,11 @@ class WebcamManager {
         );
         this.canvasContext.restore();
         
-        // Obtenir l'image en base64
+        // Obtain the image in base64
         const imageData = this.canvasElement.toDataURL('image/jpeg');
         
-        // Mettre à jour le statut
-        updateStatus('Image capturée. Analyse en cours...', 'info');
+        // Update the status
+        updateStatus('Captured image. Analysis in progress...', 'info');
         
         return imageData;
     }
@@ -153,7 +153,7 @@ class WebcamManager {
         
         this.autoCapture = true;
         
-        // Capturer une image à intervalles réguliers
+        // Capture an image at regular intervals
         this.captureInterval = setInterval(() => {
             const imageData = this.captureImage();
             if (imageData && callback) {
@@ -171,8 +171,8 @@ class WebcamManager {
     }
 }
 
-// Créer une instance du gestionnaire de webcam
+// Create an instance of the webcam manager
 const webcamManager = new WebcamManager();
 
-// Exporter pour utilisation dans d'autres scripts
+// Export for use in other scripts
 window.webcamManager = webcamManager;
