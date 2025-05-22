@@ -1,23 +1,23 @@
 /**
- * api.js - Communication avec l'API backend pour le système d'authentification faciale
+ * api.js - Communication with the API backend for the facial recognition system
  */
 
 class ApiService {
     constructor() {
-        // URL de base de l'API
+        // Base URL of the API
         this.baseUrl = 'http://localhost:5000/api';
         
-        // Token d'authentification (pour les fonctionnalités admin)
+        // Authentification Token (admin functionalitis)
         this.authToken = null;
     }
     
     /**
      * Effectue une requête vers l'API
-     * @param {string} endpoint - Point de terminaison de l'API
-     * @param {string} method - Méthode HTTP (GET, POST, etc.)
-     * @param {object} data - Données à envoyer (pour POST, PUT)
-     * @param {boolean} requiresAuth - Si la requête nécessite une authentification
-     * @returns {Promise} - Promesse avec la réponse
+     * @param {string} endpoint - Point of terminaison of the API
+     * @param {string} method - HTTP method (GET, POST, etc.)
+     * @param {object} data - Data to forward (pour POST, PUT)
+     * @param {boolean} requiresAuth - If the request needs authentification
+     * @returns {Promise} - Response 
      */
     async request(endpoint, method = 'GET', data = null, requiresAuth = false) {
         const url = `${this.baseUrl}${endpoint}`;
@@ -26,7 +26,7 @@ class ApiService {
             'Content-Type': 'application/json'
         };
         
-        // Ajouter le token d'authentification si nécessaire
+        // Add the authentification token if necessary 
         if (requiresAuth && this.authToken) {
             headers['Authorization'] = `Bearer ${this.authToken}`;
         }
@@ -37,7 +37,7 @@ class ApiService {
             mode: 'cors'
         };
         
-        // Ajouter le corps de la requête pour les méthodes POST, PUT
+        // Add the body of the POST, PUT requests 
         if (data && (method === 'POST' || method === 'PUT')) {
             options.body = JSON.stringify(data);
         }
@@ -45,7 +45,7 @@ class ApiService {
         try {
             const response = await fetch(url, options);
             
-            // Vérifier si la réponse est OK (status 200-299)
+            // Verify if the resonse si OK (status 200-299)
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.error || `Erreur HTTP: ${response.status}`);
@@ -59,38 +59,38 @@ class ApiService {
     }
     
     /**
-     * Vérifie l'état de l'API
-     * @returns {Promise} - Promesse avec l'état de l'API
+     * Verify the API state 
+     * @returns {Promise} - Promise with the API state 
      */
     async checkHealth() {
         return this.request('/health');
     }
     
     /**
-     * Détecte les visages dans une image
-     * @param {string} imageData - Image en base64
-     * @returns {Promise} - Promesse avec les résultats de détection
+     * Detect the faces in the image 
+     * @param {string} imageData - Base64 image
+     * @returns {Promise} - Promise with the details of detection 
      */
     async detectFace(imageData) {
         return this.request('/detect', 'POST', { image: imageData });
     }
     
     /**
-     * Reconnaît un visage dans une image
-     * @param {string} imageData - Image en base64
-     * @returns {Promise} - Promesse avec les résultats de reconnaissance
+     * recognise a face in the image 
+     * @param {string} imageData - Base64 image
+     * @returns {Promise} - Promise with the details of recognition  
      */
     async recognizeFace(imageData) {
         return this.request('/recognize', 'POST', { image: imageData });
     }
     
     /**
-     * Ajoute un nouvel utilisateur
-     * @param {string} name - Nom de l'utilisateur
-     * @param {number} age - Âge de l'utilisateur
-     * @param {string} profession - Profession de l'utilisateur
-     * @param {string} imageData - Image en base64
-     * @returns {Promise} - Promesse avec les résultats de l'ajout
+     * Add a new user 
+     * @param {string} name - user name 
+     * @param {number} age - user age 
+     * @param {string} profession - user profession 
+     * @param {string} imageData - Base64 image 
+     * @returns {Promise} - Promise with the details of addition 
      */
     async addUser(name, age, profession, imageData) {
         return this.request('/users', 'POST', {
@@ -102,34 +102,34 @@ class ApiService {
     }
     
     /**
-     * Récupère la liste des utilisateurs (admin)
-     * @returns {Promise} - Promesse avec la liste des utilisateurs
+     * Retrieve the list of users (admin)
+     * @returns {Promise} - Promise with the list of users 
      */
     async getUsers() {
         return this.request('/users', 'GET', null, true);
     }
     
     /**
-     * Supprime un utilisateur (admin)
-     * @param {string} userId - ID de l'utilisateur à supprimer
-     * @returns {Promise} - Promesse avec les résultats de la suppression
+     * Delete a user (admin)
+     * @param {string} userId - User ID to delete 
+     * @returns {Promise} - Promise with the results of the deletion 
      */
     async deleteUser(userId) {
         return this.request(`/users/${userId}`, 'DELETE', null, true);
     }
     
     /**
-     * Récupère les journaux d'accès (admin)
-     * @param {number} limit - Nombre maximum d'entrées à récupérer
-     * @returns {Promise} - Promesse avec les journaux
+     * Retrieve the access logs 
+     * @param {number} limit - Number of maximum retrieved accesses 
+     * @returns {Promise} - Promise with the journals 
      */
     async getLogs(limit = 100) {
         return this.request(`/logs?limit=${limit}`, 'GET', null, true);
     }
 }
 
-// Créer une instance du service API
+// Create a new instance of the API service 
 const apiService = new ApiService();
 
-// Exporter pour utilisation dans d'autres scripts
+// Export for use in other service 
 window.apiService = apiService;
