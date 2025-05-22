@@ -1,24 +1,24 @@
-# 🧠 Facial Recognition for User Authentication
+#  Facial Recognition for User Authentication
 
-## 🧾 Overview
+##  Overview
 
 This facial authentication system uses **Python (OpenCV + Flask)** for real-time face detection and recognition, and a **web-based interface** built with HTML, CSS, and JavaScript. Users can interact with the system via a webcam for authentication, registration, and access log viewing.
 
 ---
 
-## 🧩 System Architecture
+##  System Architecture
 
 The system is composed of two main components:
 
-* 🔙 **Backend**:
+*  **Backend**:
   Python Flask server with OpenCV for face detection, recognition, and user management.
 
-* 🌐 **Frontend**:
+*  **Frontend**:
   Web interface for video capture, user interaction, and administration.
 
 ---
 
-## 🧱 Prerequisites
+##  Prerequisites
 
 * Python 3.x
 * A working webcam
@@ -32,7 +32,7 @@ The system is composed of two main components:
 
 ---
 
-## ⚙️ Installation
+##  Installation
 
 1. **Clone the repository**:
 
@@ -49,7 +49,7 @@ The system is composed of two main components:
 
 ---
 
-## 🚀 Starting the System
+##  Starting the System
 
 ### 1. Start the Flask Backend
 
@@ -77,26 +77,26 @@ Then open: [http://localhost:8000/frontend](http://localhost:8000/frontend)
 
 ---
 
-## 🧑‍💻 Usage Guide
+##  Usage Guide
 
-### 👤 User Mode
+###  User Mode
 
 1. Open the web interface.
 2. Click **"Start Webcam"**.
 3. Face the webcam directly and click **"Capture"**.
 4. System Response:
 
-   * ✅ `"Face detected"` if a face is recognized.
-   * ✅ Displays **name, age, profession** if user is known.
-   * ❌ `"Face not recognized"` if unknown.
+   *  `"Face detected"` if a face is recognized.
+   *  Displays **name, age, profession** if user is known.
+   *  `"Face not recognized"` if unknown.
 
 ---
 
-### 🔐 Admin Mode
+###  Admin Mode
 
 Access by clicking **"Admin Mode"** at the bottom of the page.
 
-#### ➕ Add User
+####  Add User
 
 1. Click **"Add User"**.
 2. Fill in:
@@ -107,7 +107,7 @@ Access by clicking **"Admin Mode"** at the bottom of the page.
 3. Capture face via webcam.
 4. Click **"Save"**.
 
-#### 📄 View Logs
+####  View Logs
 
 * Click **"View Logs"** to see a table of system activity:
 
@@ -118,7 +118,7 @@ Access by clicking **"Admin Mode"** at the bottom of the page.
 
 ---
 
-## 🔐 Security
+##  Security
 
 * Only **facial embeddings** are stored (no raw images).
 * Admin functionality is protected.
@@ -127,7 +127,7 @@ Access by clicking **"Admin Mode"** at the bottom of the page.
 
 ---
 
-## 🧰 Troubleshooting
+##  Troubleshooting
 
 | Problem                | Solution                                           |
 | ---------------------- | -------------------------------------------------- |
@@ -137,7 +137,7 @@ Access by clicking **"Admin Mode"** at the bottom of the page.
 
 ---
 
-## ⚠️ Known Limitations
+##  Known Limitations
 
 * May struggle under low lighting or side-angle faces
 * No spoof detection (e.g., photos or videos)
@@ -145,19 +145,19 @@ Access by clicking **"Admin Mode"** at the bottom of the page.
 
 ---
 
-## 📬 Support
+##  Support
 
-📬 Support
+ Support
 For help, questions, or to report issues, feel free to contact the team:
 
-📧 fhaallyosseer@gmail.com
+ fhaallyosseer@gmail.com
 
-📧 teyebdouaa.3.math@gmail.com
+ teyebdouaa.3.math@gmail.com
 
-📧 bgt.jihane@gmail.com
+ bgt.jihane@gmail.com
 
-📧 islem.smiai@gmail.com
+ islem.smiai@gmail.com
 
-📧 yazidiyassmine38@gmail.com
+ yazidiyassmine38@gmail.com
 
 
